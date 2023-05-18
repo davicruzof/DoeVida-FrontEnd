@@ -1,12 +1,12 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { Button } from ".";
+import { ButtonLink } from ".";
 
 const MOCK_TEXT = "testing";
 const MOCK_HANDLE_PRESS = jest.fn();
 
 const setup = () => {
   return render(
-    <Button textButton={MOCK_TEXT} handlePress={MOCK_HANDLE_PRESS} />
+    <ButtonLink textButton={MOCK_TEXT} handlePress={MOCK_HANDLE_PRESS} />
   );
 };
 

@@ -5,8 +5,8 @@ export const Container = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 100%;
   height: 70px;
+  max-width: 100%;
   box-shadow: 0 3px 6px #00000029;
   padding-left: 32px;
   margin-bottom: 6px;
