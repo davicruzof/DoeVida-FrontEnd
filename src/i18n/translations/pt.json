@@ -1,5 +1,13 @@
 {
     "translation": {
-        "welcome": "Olá Mundo!"
+        "appName": "Doe Vida",
+        "signInSubtitle": "Digite o seu cpf e senha para acessar!",
+        "signInInputCpf": "CPF",
+        "signInPlaceholderInputCpf": "CPF",
+        "signInInputPassword": "Digite o seu cpf",
+        "signInPlaceholderInputSenha": "Digite a sua senha atual",
+        "signInRecoveryPasswordButton": "Esqueci a minha senha",
+        "signInButton": "Entrar",
+        "signInCreateNewAccount": "Criar uma nova conta"
     }
 }
