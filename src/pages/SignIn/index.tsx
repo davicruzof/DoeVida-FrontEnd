@@ -1,16 +1,16 @@
+import React, { useState } from "react";
 import Illustration from "@/assets/illustrations/auth.svg";
 import * as S from "./styles";
 import { useTranslation } from "react-i18next";
 import { HeaderWithout } from "@/components/HeaderWithout";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
-import { useState } from "react";
 import { ButtonLink } from "@/components/ButtonLink";
 
-export function SignIn() {
+const SignIn: React.FC = () => {
   const { t } = useTranslation();
 
-  const [value, setValue] = useState<string | number>("");
+  const [value, setValue] = useState<string>("");
 
   return (
     <div title="Doe Vida Login">
@@ -56,4 +56,6 @@ export function SignIn() {
       </S.Container>
     </div>
   );
-}
+};
+
+export default SignIn;
