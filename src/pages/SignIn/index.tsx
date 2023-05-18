@@ -6,11 +6,17 @@ import { HeaderWithout } from "@/components/HeaderWithout";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { ButtonLink } from "@/components/ButtonLink";
+import { useNavigate } from "react-router-dom";
 
 const SignIn: React.FC = () => {
   const { t } = useTranslation();
+  const navigation = useNavigate();
 
   const [value, setValue] = useState<string>("");
+
+  const createNewAccount = () => {
+    navigation("/signUp", { replace: true });
+  };
 
   return (
     <div title="Doe Vida Login">
@@ -48,7 +54,7 @@ const SignIn: React.FC = () => {
               <ButtonLink
                 style={{ textDecoration: "underline" }}
                 textButton={t("signInCreateNewAccount")}
-                handlePress={() => {}}
+                handlePress={createNewAccount}
               />
             </S.CreateAccountContainer>
           </S.CardContent>

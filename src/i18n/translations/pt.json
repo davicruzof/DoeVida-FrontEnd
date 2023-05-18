@@ -8,6 +8,23 @@
         "signInPlaceholderInputPassword": "Digite a sua senha atual",
         "signInRecoveryPasswordButton": "Esqueci a minha senha",
         "signInButton": "Entrar",
-        "signInCreateNewAccount": "Criar uma nova conta"
+        "signInCreateNewAccount": "Criar uma nova conta",
+
+        "signUpTitle": "Criar uma nova conta",
+        "signUpSectionDataPerson": "Dados pessoais",
+        "signUpSectionDataAddress": "Dados de endereço",
+        "signUpInputName": "Nome",
+        "signUpInputNamePlaceholder": "Digite o seu nome completo",
+        "signUpInputEmail": "Email",
+        "signUpInputEmailPlaceholder": "Digite o seu email",
+        "signUpInputCpf": "CPF",
+        "signUpInputCpfPlaceholder": "Digite o seu cpf",
+        "signUpInputBirthDay": "Data de nascimento",
+        "signUpInputPhone": "Telefone",
+        "signUpInputPhonePlaceholder": "Digite o seu telefone",
+        "signUpInputPassword": "Senha",
+        "signUpInputPasswordPlaceholder": "crie uma senha de acesso",
+        "signUpButtonCreate": "Criar conta",
+        "signUpButtonBack": "Voltar"
     }
 }
