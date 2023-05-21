@@ -21,7 +21,6 @@
   "plugins": ["react", "@typescript-eslint", "prettier"],
   "rules": {
     "camelcase": "off",
-    "import/no-unresolved": "error",
     "@typescript-eslint/naming-convention": [
       "error",
       {
@@ -40,12 +39,6 @@
     "no-useless-constructor": "off",
     "no-empty-function": "off",
     "lines-between-class-members": "off",
-    "import/no-extraneous-dependencies": [
-      "error",
-      {
-        "devDependencies": ["**/*.spec.js", "**/*.d.*"]
-      }
-    ],
     "prettier/prettier": "error",
     "react/jsx-filename-extension": [
       1,

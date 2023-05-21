@@ -49,3 +49,13 @@ export const ButtonsContainer = styled.span`
   flex-direction: row;
   gap: 16px;
 `;
+
+export const TextError = styled.span`
+  color: red;
+  font-size: 12px;
+`;
+
+export const WrapperError = styled.div`
+  flex-direction: column;
+  flex: 1;
+`;

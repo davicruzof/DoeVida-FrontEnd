@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1684433114804" clover="3.2.0">
-  <project timestamp="1684433114804" name="All files">
-    <metrics statements="34" coveredstatements="34" conditionals="0" coveredconditionals="0" methods="11" coveredmethods="11" elements="45" coveredelements="45" complexity="0" loc="34" ncloc="34" packages="7" files="12" classes="12"/>
+<coverage generated="1684629747452" clover="3.2.0">
+  <project timestamp="1684629747452" name="All files">
+    <metrics statements="42" coveredstatements="35" conditionals="2" coveredconditionals="0" methods="14" coveredmethods="6" elements="58" coveredelements="41" complexity="0" loc="42" ncloc="42" packages="8" files="15" classes="15"/>
     <package name=".jest.mocks">
       <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="fileMock.js" path="/Users/davidejesuscruz/Desktop/projects/DoeVida/.jest/mocks/fileMock.js">
@@ -20,7 +20,7 @@
       <file name="index.tsx" path="/Users/davidejesuscruz/Desktop/projects/DoeVida/src/components/Button/index.tsx">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="5" count="2" type="stmt"/>
-        <line num="10" count="9" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
       </file>
       <file name="styles.ts" path="/Users/davidejesuscruz/Desktop/projects/DoeVida/src/components/Button/styles.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -32,19 +32,31 @@
       <file name="index.tsx" path="/Users/davidejesuscruz/Desktop/projects/DoeVida/src/components/ButtonLink/index.tsx">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="5" count="2" type="stmt"/>
-        <line num="10" count="16" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
       </file>
       <file name="styles.ts" path="/Users/davidejesuscruz/Desktop/projects/DoeVida/src/components/ButtonLink/styles.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="4" count="2" type="stmt"/>
       </file>
     </package>
+    <package name="src.components.ButtonOutline">
+      <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="index.tsx" path="/Users/davidejesuscruz/Desktop/projects/DoeVida/src/components/ButtonOutline/index.tsx">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+      </file>
+      <file name="styles.ts" path="/Users/davidejesuscruz/Desktop/projects/DoeVida/src/components/ButtonOutline/styles.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="4" count="1" type="stmt"/>
+      </file>
+    </package>
     <package name="src.components.HeaderWithout">
       <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <file name="index.tsx" path="/Users/davidejesuscruz/Desktop/projects/DoeVida/src/components/HeaderWithout/index.tsx">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="6" count="8" type="stmt"/>
-        <line num="7" count="8" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
       </file>
       <file name="styles.ts" path="/Users/davidejesuscruz/Desktop/projects/DoeVida/src/components/HeaderWithout/styles.ts">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -54,30 +66,34 @@
       </file>
     </package>
     <package name="src.components.Input">
-      <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+      <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <file name="index.tsx" path="/Users/davidejesuscruz/Desktop/projects/DoeVida/src/components/Input/index.tsx">
-        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="4" count="2" type="stmt"/>
-        <line num="11" count="16" type="stmt"/>
-        <line num="19" count="3" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
       </file>
       <file name="styles.ts" path="/Users/davidejesuscruz/Desktop/projects/DoeVida/src/components/Input/styles.ts">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="4" count="2" type="stmt"/>
-        <line num="13" count="2" type="stmt"/>
-        <line num="19" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
       </file>
     </package>
     <package name="src.pages.SignIn">
-      <metrics statements="16" coveredstatements="16" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="6"/>
+      <metrics statements="22" coveredstatements="15" conditionals="2" coveredconditionals="0" methods="9" coveredmethods="1"/>
       <file name="index.tsx" path="/Users/davidejesuscruz/Desktop/projects/DoeVida/src/pages/SignIn/index.tsx">
-        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="6"/>
-        <line num="10" count="1" type="stmt"/>
-        <line num="11" count="7" type="stmt"/>
-        <line num="13" count="7" type="stmt"/>
-        <line num="15" count="7" type="stmt"/>
-        <line num="29" count="1" type="stmt"/>
-        <line num="35" count="1" type="stmt"/>
+        <metrics statements="11" coveredstatements="4" conditionals="2" coveredconditionals="0" methods="9" coveredmethods="1"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="17" count="21" type="stmt"/>
+        <line num="18" count="20" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="34" count="0" type="stmt"/>
+        <line num="63" count="0" type="stmt"/>
+        <line num="90" count="1" type="cond" truecount="0" falsecount="2"/>
       </file>
       <file name="styles.ts" path="/Users/davidejesuscruz/Desktop/projects/DoeVida/src/pages/SignIn/styles.ts">
         <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -91,6 +107,10 @@
         <line num="59" count="1" type="stmt"/>
         <line num="66" count="1" type="stmt"/>
         <line num="73" count="1" type="stmt"/>
+      </file>
+      <file name="types.ts" path="/Users/davidejesuscruz/Desktop/projects/DoeVida/src/pages/SignIn/types.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="3" count="1" type="stmt"/>
       </file>
     </package>
   </project>

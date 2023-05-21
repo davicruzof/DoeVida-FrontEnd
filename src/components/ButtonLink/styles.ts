@@ -9,4 +9,5 @@ export const Container = styled.a`
   align-items: center;
   font-weight: 600;
   cursor: pointer;
+  text-decoration: "underline";
 `;

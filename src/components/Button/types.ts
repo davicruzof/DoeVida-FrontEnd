@@ -1,4 +1,3 @@
-export type ButtonProps = {
+export interface IButtonProps extends HTMLButtonElement {
   textButton: string;
-  handlePress: () => void;
-};
+}

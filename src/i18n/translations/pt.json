@@ -25,6 +25,6 @@
         "signUpInputPassword": "Senha",
         "signUpInputPasswordPlaceholder": "crie uma senha de acesso",
         "signUpButtonCreate": "Criar conta",
-        "signUpButtonBack": "Voltar"
+        "signUpButtonBack": "Voltar para login"
     }
 }
