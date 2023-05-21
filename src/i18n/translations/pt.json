@@ -25,6 +25,21 @@
         "signUpInputPassword": "Senha",
         "signUpInputPasswordPlaceholder": "crie uma senha de acesso",
         "signUpButtonCreate": "Criar conta",
-        "signUpButtonBack": "Voltar para login"
+        "signUpButtonBack": "Voltar para login",
+        "signUpAddressCep": "CEP",
+        "signUpAddressCepPlaceholder": "Digite o seu cep",
+        "signUpAddressUf": "Estado",
+        "signUpAddressUfPlaceholder": "Digite o estado",
+        "signUpAddressCity": "Cidade",
+        "signUpAddressCityPlaceholder": "Digite a cidade",
+        "signUpAddressBairro": "Bairro",
+        "signUpAddressBairroPlaceholder": "Digite o bairro",
+        "signUpAddressStreet": "Logradouro",
+        "signUpAddressStreetPlaceholder": "Informe um logradouro (rua, avenida, povoado)",
+        "signUpAddressNumber": "Numero",
+        "signUpAddressNumberPlaceholder": "Informe o numero",
+        "signUpAddressComplement": "Informe o numero",
+        "signUpAddressComplementPlaceholder": "Informe o numero"
+
     }
 }

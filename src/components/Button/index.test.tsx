@@ -5,9 +5,7 @@ const MOCK_TEXT = "testing";
 const MOCK_HANDLE_PRESS = jest.fn();
 
 const setup = () => {
-  return render(
-    <Button textButton={MOCK_TEXT} handlePress={MOCK_HANDLE_PRESS} />
-  );
+  return render(<Button textButton={MOCK_TEXT} onClick={MOCK_HANDLE_PRESS} />);
 };
 
 describe("<Button />", () => {
