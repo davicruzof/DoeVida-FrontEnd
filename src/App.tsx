@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Navigation from "./routes";
 import { AxiosError } from "axios";
+import { Main } from "./pages/Main";
 
 function App() {
   const queryClient = new QueryClient({
@@ -20,7 +21,9 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Navigation />
+      <Main>
+        <Navigation />
+      </Main>
     </QueryClientProvider>
   );
 }

@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ButtonLink } from "@/components/ButtonLink";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
+import { isCPF, formatToCPF } from "brazilian-values";
 
 const CardForm: React.FC = () => {
   const navigate = useNavigate();

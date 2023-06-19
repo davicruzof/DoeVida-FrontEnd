@@ -39,7 +39,12 @@
         "signUpAddressNumber": "Numero",
         "signUpAddressNumberPlaceholder": "Informe o numero",
         "signUpAddressComplement": "Informe o numero",
-        "signUpAddressComplementPlaceholder": "Informe o numero"
+        "signUpAddressComplementPlaceholder": "Informe o numero",
+        "menuAttendantSchedules": "Agendamentos",
+        "menuAttendantRequests": "Solicitações",
+        "menuAttendantDonors": "Doadores",
+        "menuAttendantSupport": "Apoio",
+        "menuAttendantVacancies": "Vagas"
 
     }
 }
