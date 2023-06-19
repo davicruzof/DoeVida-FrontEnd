@@ -1,0 +1,24 @@
+.css-3be3ve-MuiFormControl-root-MuiTextField-root-MuiDataGrid-toolbarQuickFilter {
+    border: 1px solid #c4c4c4!important;
+    border-radius: 4px;
+    padding: 4px 8px!important;
+    width: 50%!important;
+    margin: 20px 0 !important;
+}
+
+.css-3be3ve-MuiFormControl-root-MuiTextField-root-MuiDataGrid-toolbarQuickFilter::hover {
+    border: 1px solid #2763f5!important;
+}
+
+.css-3be3ve-MuiFormControl-root-MuiTextField-root-MuiDataGrid-toolbarQuickFilter::before {
+    border: 1px solid #2763f5!important;
+}
+
+.css-3be3ve-MuiFormControl-root-MuiTextField-root-MuiDataGrid-toolbarQuickFilter .MuiInput-underline:before {
+    border: 0px solid #2763f5!important;
+    padding: 8px;
+}
+
+.css-3be3ve-MuiFormControl-root-MuiTextField-root-MuiDataGrid-toolbarQuickFilter .MuiInput-underline:after {
+    border: 0px solid #2763f5!important;
+}
