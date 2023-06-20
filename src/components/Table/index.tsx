@@ -1,9 +1,7 @@
 import { Button, CircularProgress } from "@material-ui/core";
 import {
   DataGrid,
-  GridToolbar,
   GridToolbarContainer,
-  GridToolbarExport,
   GridToolbarQuickFilter,
   ptBR,
 } from "@mui/x-data-grid";
