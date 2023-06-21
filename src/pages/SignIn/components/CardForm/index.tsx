@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import * as S from "./styles";
 import { useNavigate } from "react-router-dom";
@@ -6,13 +6,15 @@ import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { authProps, authSchema } from "./types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ButtonLink } from "@/components/ButtonLink";
-import { Button } from "@/components/Button";
-import { Input } from "@/components/Input";
-import { isCPF, formatToCPF } from "brazilian-values";
+import { ButtonLink } from "../../../../components/ButtonLink";
+import { Button } from "../../../../components/Button";
+import { Input } from "../../../../components/Input";
+import { AuthContext } from "../../../../context/auth";
+// import { isCPF, formatToCPF } from "brazilian-values";
 
 const CardForm: React.FC = () => {
   const navigate = useNavigate();
+  const { setAuthValues } = useContext(AuthContext);
   const { t } = useTranslation();
   const {
     register,
@@ -29,6 +31,11 @@ const CardForm: React.FC = () => {
   };
 
   const authUser = (data: authProps) => {
+    setAuthValues({ signed: true });
+    window.sessionStorage.setItem(
+      "authStorage",
+      JSON.stringify({ signed: true })
+    );
     navigate("/home", { replace: true });
   };
 

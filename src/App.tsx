@@ -1,10 +1,16 @@
+import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Navigation from "./routes";
 import { AxiosError } from "axios";
+import Navigation from "./routes";
 import { Main } from "./pages/Main";
+import { AppContextProvider } from "./context/auth";
 import "./App.css";
 
 function App() {
+  const [authValues, setAuthValues] = useState({
+    signed: false,
+  });
+
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -22,9 +28,11 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Main>
-        <Navigation />
-      </Main>
+      <AppContextProvider value={{ authValues, setAuthValues }}>
+        <Main>
+          <Navigation />
+        </Main>
+      </AppContextProvider>
     </QueryClientProvider>
   );
 }

@@ -1,15 +1,16 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Button } from "@/components/Button";
-import { Input } from "@/components/Input";
-import { ButtonOutline } from "@/components/ButtonOutline";
+import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as S from "./styles";
+
 import { CreateUserProps, createUserFormSchema } from "./type";
-import { useMutation } from "@tanstack/react-query";
-import { getAddress } from "@/services/viaCepApi";
+import { ButtonOutline } from "../../components/ButtonOutline";
+import { Button } from "../../components/Button";
+import { Input } from "../../components/Input";
+import { getAddress } from "../../services/viaCepApi";
+import * as S from "./styles";
 
 const SignUp: React.FC = () => {
   const { t } = useTranslation();

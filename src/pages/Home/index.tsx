@@ -7,6 +7,7 @@ import { Faker, pt_BR } from "@faker-js/faker";
 import { DateTime } from "luxon";
 
 function Home() {
+  console.log("Function not implemented.");
   // const { t, i18n } = useTranslation();
   const faker = new Faker({
     locale: [pt_BR],

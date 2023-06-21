@@ -1,16 +1,17 @@
 import Logo from "@/assets/logo.svg";
 import * as S from "./styles";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button, Menu, MenuItem } from "@material-ui/core";
 import { ArrowDropDown } from "@material-ui/icons";
 import { AttendantItems } from "./constants";
 import { useLocation } from "react-router-dom";
+import { AuthContext } from "../../context/auth";
 
 export function Header() {
   const location = useLocation();
+  const { authValues } = useContext(AuthContext);
 
-  console.log(location.pathname.replace("/", ""));
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -29,46 +30,50 @@ export function Header() {
         <S.Logo src={Logo} alt="" />
         <S.Title>{t("appName")}</S.Title>
       </S.WrapperLogo>
-      <S.MenuDesktop>
-        {AttendantItems.map((item) => {
-          return (
-            <S.MenuItem
-              key={item.key}
-              active={location.pathname.replace("/", "") === item.path}
+      {authValues.signed && (
+        <>
+          <S.MenuDesktop>
+            {AttendantItems.map((item) => {
+              return (
+                <S.MenuItem
+                  key={item.key}
+                  active={location.pathname.replace("/", "") === item.path}
+                >
+                  {t(item.key)}
+                </S.MenuItem>
+              );
+            })}
+          </S.MenuDesktop>
+
+          <div>
+            <Button
+              id="basic-button"
+              aria-controls={open ? "fade-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+              color="primary"
+              endIcon={<ArrowDropDown />}
+              style={{ fontWeight: "600", color: "#2763f5" }}
             >
-              {t(item.key)}
-            </S.MenuItem>
-          );
-        })}
-      </S.MenuDesktop>
+              Daniel Lima
+            </Button>
 
-      <div>
-        <Button
-          id="basic-button"
-          aria-controls={open ? "fade-menu" : undefined}
-          aria-haspopup="true"
-          aria-expanded={open ? "true" : undefined}
-          onClick={handleClick}
-          color="primary"
-          endIcon={<ArrowDropDown />}
-          style={{ fontWeight: "600", color: "#2763f5" }}
-        >
-          Daniel Lima
-        </Button>
-
-        <Menu
-          id="basic-menu"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          MenuListProps={{
-            "aria-labelledby": "basic-button",
-          }}
-        >
-          <MenuItem onClick={handleClose}>Perfil</MenuItem>
-          <MenuItem onClick={handleClose}>Sair</MenuItem>
-        </Menu>
-      </div>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+            >
+              <MenuItem onClick={handleClose}>Perfil</MenuItem>
+              <MenuItem onClick={handleClose}>Sair</MenuItem>
+            </Menu>
+          </div>
+        </>
+      )}
     </S.Container>
   );
 }

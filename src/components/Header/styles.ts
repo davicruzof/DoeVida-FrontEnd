@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import colors from "@/assets/colors";
+import colors from "../../assets/colors";
 
 export const Container = styled.div`
   display: flex;
@@ -37,7 +37,7 @@ export const MenuDesktop = styled.div`
   align-items: center;
 `;
 
-export const MenuItem = styled.a<{ active?: boolean }>`
+export const MenuItem = styled.a<{ active: boolean }>`
   font-size: 16px;
   line-height: 24px;
   letter-spacing: 0.01em;

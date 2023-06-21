@@ -1,6 +1,6 @@
 import React from "react";
 
-import Illustration from "@/assets/illustrations/auth.svg";
+import Illustration from "../../assets/illustrations/auth.svg";
 
 import * as S from "./styles";
 import CardForm from "./components/CardForm";

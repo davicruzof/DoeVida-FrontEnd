@@ -1,16 +1,22 @@
-import { Routes, Route } from "react-router-dom";
-import SignIn from "@/pages/SignIn";
-import SignUp from "@/pages/SignUp";
-import Home from "@/pages/Home";
+import { useContext, useEffect } from "react";
+import AuthRoutes from "./AuthRoutes";
+import NoAuthRoutes from "./NoAuthRoutes";
+import { AuthContext } from "../context/auth";
 
 const Navigation = () => {
-  return (
-    <Routes>
-      <Route path="/" element={<SignIn />} />
-      <Route path="/signUp" element={<SignUp />} />
-      <Route path="/home" element={<Home />} />
-    </Routes>
-  );
+  const { authValues, setAuthValues } = useContext(AuthContext);
+
+  useEffect(() => {
+    const authStorage = window.sessionStorage.getItem("authStorage");
+    if (authStorage) {
+      const auth = JSON.parse(authStorage);
+      setAuthValues(auth);
+    }
+  }, []);
+
+  console.log(authValues.signed);
+
+  return authValues.signed ? <AuthRoutes /> : <NoAuthRoutes />;
 };
 
 export default Navigation;
