@@ -14,7 +14,7 @@ const Empty: React.FC<{ text: string }> = ({ text }) => {
         height: window.innerHeight - 200,
       }}
     >
-      <img src={EMPTY} style={{ width: "fit-content", marginBottom: 48 }} />
+      <img src={EMPTY} style={{ width: 500, marginBottom: 48 }} />
       <h4>{text}</h4>
     </div>
   );

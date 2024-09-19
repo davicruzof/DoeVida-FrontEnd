@@ -1,16 +1,12 @@
-import colors from "@/assets/colors";
+import { Modal } from "@mui/material";
+import colors from "../../assets/colors";
 import styled from "styled-components";
 
-export const Container = styled.div`
-  display: flex;
+export const Container = styled(Modal)`
+  /* display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 40px 10%;
-
-  @media screen and (max-width: 768px) {
-    flex-direction: column;
-    padding: 10% 5%;
-  }
+  padding: 40px 10%; */
 `;
 
 export const Title = styled.h3`

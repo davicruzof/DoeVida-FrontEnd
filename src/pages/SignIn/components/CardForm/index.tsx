@@ -10,7 +10,7 @@ import { ButtonLink } from "../../../../components/ButtonLink";
 import { Button } from "../../../../components/Button";
 import { Input } from "../../../../components/Input";
 import { AuthContext } from "../../../../context/auth";
-// import { isCPF, formatToCPF } from "brazilian-values";
+import { IUserAuth, users } from "./dataBase";
 
 const CardForm: React.FC = () => {
   const navigate = useNavigate();
@@ -31,12 +31,38 @@ const CardForm: React.FC = () => {
   };
 
   const authUser = (data: authProps) => {
-    setAuthValues({ signed: true });
-    window.sessionStorage.setItem(
-      "authStorage",
-      JSON.stringify({ signed: true })
+    const user = users.find(
+      (user: IUserAuth) =>
+        user.cpf === data.cpf.replace(/\D/g, "") &&
+        user.password === data.password
     );
-    navigate("/home", { replace: true });
+
+    if (!user) {
+      return alert("Cpf ou senha inválidos");
+    }
+
+    const authData = {
+      signed: true,
+      user_type: user.user_type,
+      user: {
+        name: user.name,
+        cpf: user.cpf,
+      },
+    };
+
+    setAuthValues(authData);
+
+    const routes = {
+      [users[0].user_type]: "/enterprises",
+      [users[1].user_type]: "/agendamentos doador",
+      [users[2].user_type]: "/agendamentos doador",
+      [users[3].user_type]: "/agendamentos",
+    };
+
+    window.sessionStorage.setItem("authStorage", JSON.stringify(authData));
+    navigate(routes[user.user_type], {
+      replace: true,
+    });
   };
 
   return (

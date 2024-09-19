@@ -21,7 +21,7 @@
     "@mui/material": "^5.13.5",
     "@mui/styled-engine-sc": "^5.12.0",
     "@mui/x-data-grid": "^6.8.0",
-    "@tanstack/react-query": "^4.29.7",
+    "@tanstack/react-query": "^5.53.1",
     "@types/luxon": "^3.3.0",
     "axios": "^1.4.0",
     "brazilian-values": "^0.13.0",

@@ -1,4 +1,4 @@
-import colors from "@/assets/colors";
+import colors from "../../assets/colors";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -62,4 +62,28 @@ export const TextError = styled.span`
 export const WrapperError = styled.div`
   flex-direction: column;
   flex: 1;
+`;
+
+export const MenuItem = styled.option`
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  color: #59626d;
+  font-weight: 400;
+  cursor: pointer;
+
+  &:hover {
+    color: #2763f5;
+  }
+`;
+
+export const Select = styled.select`
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  color: #59626d;
+  font-weight: 400;
+  cursor: pointer;
 `;

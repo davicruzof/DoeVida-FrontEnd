@@ -3,13 +3,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import Navigation from "./routes";
 import { Main } from "./pages/Main";
-import { AppContextProvider } from "./context/auth";
+import { AppContextProvider, IAuth } from "./context/auth";
 import "./App.css";
 
 function App() {
-  const [authValues, setAuthValues] = useState({
-    signed: false,
-  });
+  const [authValues, setAuthValues] = useState<IAuth>({} as IAuth);
 
   const queryClient = new QueryClient({
     defaultOptions: {

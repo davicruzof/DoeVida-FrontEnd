@@ -6,9 +6,7 @@ export const authSchema = z.object({
   cpf: z
     .string()
     .nonempty("O cpf é obrigatório")
-    .transform((val) => {
-      formatToCPF(val);
-    }),
+    .transform((val) => formatToCPF(val)),
 });
 
 export type authProps = z.infer<typeof authSchema>;

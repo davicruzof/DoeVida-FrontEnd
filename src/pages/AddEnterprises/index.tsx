@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
@@ -10,9 +10,25 @@ import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { getAddress } from "../../services/viaCepApi";
 import * as S from "./styles";
-import { createUserFormSchema, CreateUserProps } from "./type";
+import { createEnterpriseFormSchema, CreateEnterpriseProps } from "./type";
 
-const SignUp: React.FC = () => {
+interface IEnterpriseData {
+  id: string;
+  enterpriseName: string;
+  phoneNumber: string;
+  cnpj: string;
+  address: {
+    street: string;
+    number: string;
+    neighborhood: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    complement: string;
+  };
+}
+
+function AddEnterprises() {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -23,48 +39,75 @@ const SignUp: React.FC = () => {
     setValue,
     resetField,
     formState: { errors },
-  } = useForm<CreateUserProps>({
+  } = useForm<CreateEnterpriseProps>({
     mode: "all",
     reValidateMode: "onChange",
-    resolver: zodResolver(createUserFormSchema),
+    resolver: zodResolver(createEnterpriseFormSchema),
   });
 
   const { mutate: getAddressRefetch } = useMutation({
     mutationFn: (cep: string) => getAddress(cep),
     onSuccess: (data: any) => {
       setValue("city", data.localidade);
-      setValue("bairro", data.bairro);
+      setValue("neighborhood", data.bairro);
       setValue("uf", data.uf);
       setValue("complement", data.complemento);
       setValue("street", data.logradouro);
     },
   });
 
-  const createUser = (data: CreateUserProps) => {
-    const users = window.localStorage.getItem("users");
+  const createEnterprise = (data: CreateEnterpriseProps) => {
+    const enterprises = window.localStorage.getItem("enterprises");
 
-    const user = {
-      ...data,
-      id: Math.random().toString(36).substr(2, 9),
+    const id = Math.random().toString(36).substr(2, 9);
+
+    const enterpriseData: IEnterpriseData = {
+      id,
+      enterpriseName: data.enterpriseName,
+      phoneNumber: data.phoneNumber,
+      cnpj: data.cnpj,
+      address: {
+        street: data.street,
+        number: data.number,
+        neighborhood: data.neighborhood,
+        city: data.city,
+        state: data.uf,
+        zipCode: data.cep,
+        complement: data.complement,
+      },
     };
 
-    if (users) {
-      const parsedUsers = JSON.parse(users);
+    if (enterprises) {
+      const parsedEnterprises = JSON.parse(enterprises);
+
+      const existEnterprise = parsedEnterprises.find(
+        (item: IEnterpriseData) => item.cnpj === data.cnpj
+      );
+
+      if (existEnterprise) {
+        window.alert("Já existe uma organização com esse CNPJ");
+        return;
+      }
+
+      const newEnterprises = [...parsedEnterprises, enterpriseData];
       window.localStorage.setItem(
-        "users",
-        JSON.stringify([...parsedUsers, user])
+        "enterprises",
+        JSON.stringify(newEnterprises)
       );
     } else {
-      window.localStorage.setItem("users", JSON.stringify([user]));
+      window.localStorage.setItem(
+        "enterprises",
+        JSON.stringify([enterpriseData])
+      );
     }
 
-    window.alert("Usuário cadastrado com sucesso!");
-    navigate("/", { replace: true });
+    window.alert("Organização cadastrada com sucesso!");
+    navigate("/enterprises", { replace: true });
   };
 
   const clearFieldAddress = () => {
     resetField("city");
-    resetField("bairro");
+    resetField("neighborhood");
     resetField("uf");
     resetField("complement");
     resetField("street");
@@ -80,79 +123,48 @@ const SignUp: React.FC = () => {
 
   return (
     <S.Container>
-      <S.Title>{t("signUpTitle")}</S.Title>
+      <S.Title>Cadastrar nova organização</S.Title>
       <S.Form role="form">
-        <S.TitleSection>{t("signUpSectionDataPerson")}</S.TitleSection>
+        <S.TitleSection>Dados da organização</S.TitleSection>
         <S.WrapperForm>
           <S.WrapperError>
             <Input
               type="text"
-              label={t("signUpInputName")}
-              placeholder={t("signUpInputNamePlaceholder")}
+              label="Nome da organização"
+              placeholder="Digite o nome da organização"
               register={register}
-              name="name"
+              name="enterpriseName"
             />
 
-            {errors.name && <S.TextError>{errors.name.message}</S.TextError>}
+            {errors.enterpriseName && (
+              <S.TextError>{errors.enterpriseName.message}</S.TextError>
+            )}
           </S.WrapperError>
-          <Input
-            type="email"
-            label={t("signUpInputEmail")}
-            placeholder={t("signUpInputEmailPlaceholder")}
-            register={register}
-            name="email"
-          />
         </S.WrapperForm>
         <S.WrapperForm>
           <S.WrapperError>
             <Input
               type="text"
-              label={t("signUpInputCpf")}
-              placeholder={t("signUpInputCpfPlaceholder")}
+              label="CNPJ"
+              placeholder="Digite o CNPJ"
               register={register}
-              name="cpf"
+              name="cnpj"
             />
 
-            {errors.cpf && <S.TextError>{errors.cpf.message}</S.TextError>}
-          </S.WrapperError>
-
-          <S.WrapperError>
-            <Input
-              type="date"
-              label={t("signUpInputBirthDay")}
-              placeholder={t("signUpInputEmailPlaceholder")}
-              register={register}
-              name="birthDay"
-            />
-
-            {errors.birthDay && (
-              <S.TextError>{errors.birthDay.message}</S.TextError>
-            )}
+            {errors.cnpj && <S.TextError>{errors.cnpj.message}</S.TextError>}
           </S.WrapperError>
 
           <S.WrapperError>
             <Input
               type="phone"
-              label={t("signUpInputPhone")}
-              placeholder={t("signUpInputPhonePlaceholder")}
+              label="Telefone"
+              placeholder="Digite o telefone"
               register={register}
-              name="phone"
+              name="phoneNumber"
             />
 
-            {errors.phone && <S.TextError>{errors.phone.message}</S.TextError>}
-          </S.WrapperError>
-
-          <S.WrapperError>
-            <Input
-              label={t("signUpInputPassword")}
-              type="password"
-              placeholder={t("signUpInputPasswordPlaceholder")}
-              register={register}
-              name="password"
-            />
-
-            {errors.password && (
-              <S.TextError>{errors.password.message}</S.TextError>
+            {errors.phoneNumber && (
+              <S.TextError>{errors.phoneNumber.message}</S.TextError>
             )}
           </S.WrapperError>
         </S.WrapperForm>
@@ -229,11 +241,11 @@ const SignUp: React.FC = () => {
               label={t("signUpAddressBairro")}
               placeholder={t("signUpAddressBairroPlaceholder")}
               register={register}
-              name="bairro"
+              name="neighborhood"
             />
 
-            {errors.bairro && (
-              <S.TextError>{errors.bairro.message}</S.TextError>
+            {errors.neighborhood && (
+              <S.TextError>{errors.neighborhood.message}</S.TextError>
             )}
           </S.WrapperError>
           <Input
@@ -247,17 +259,17 @@ const SignUp: React.FC = () => {
       </S.Form>
 
       <S.ButtonsContainer>
-        <Button
-          textButton={t("signUpButtonCreate")}
-          onClick={handleSubmit(createUser)}
-        />
         <ButtonOutline
-          textButton={t("signUpButtonBack")}
-          handlePress={() => navigate("/", { replace: true })}
+          textButton="voltar"
+          handlePress={() => navigate("/enterprises", { replace: true })}
+        />
+        <Button
+          textButton="Cadastrar"
+          onClick={handleSubmit(createEnterprise)}
         />
       </S.ButtonsContainer>
     </S.Container>
   );
-};
+}
 
-export default SignUp;
+export default AddEnterprises;

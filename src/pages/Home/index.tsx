@@ -1,14 +1,11 @@
-import { Edit, Visibility } from "@material-ui/icons";
-import { Avatar, Chip, IconButton } from "@mui/material";
+import { Visibility } from "@material-ui/icons";
+import { IconButton } from "@mui/material";
 import Table from "../../components/Table";
 import { useState } from "react";
-// import { useTranslation } from "react-i18next";
 import { Faker, pt_BR } from "@faker-js/faker";
 import { DateTime } from "luxon";
 
 function Home() {
-  console.log("Function not implemented.");
-  // const { t, i18n } = useTranslation();
   const faker = new Faker({
     locale: [pt_BR],
   });
@@ -73,6 +70,10 @@ function Home() {
         rows={rows}
         pageSize={pageSize}
         setPageSize={setPageSize}
+        tableAddText="novo doador"
+        tableAddAction={function (): void {
+          throw new Error("Function not implemented.");
+        }}
       />
     </div>
   );

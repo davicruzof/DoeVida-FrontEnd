@@ -1,5 +1,6 @@
-import { render, fireEvent } from "@testing-library/react";
+import { fireEvent, waitFor } from "@testing-library/react";
 import CardForm from ".";
+import { renderWithProvider } from "@/test-utils/test-utils";
 
 const mockNavigate = jest.fn();
 
@@ -33,13 +34,13 @@ describe("CardForm", () => {
   });
 
   it("should render card form", () => {
-    const { getByText } = render(<CardForm />);
+    const { getByText } = renderWithProvider(<CardForm />);
 
     expect(getByText("signInSubtitle")).toBeInTheDocument();
   });
 
   it("navigates to recovery password page", () => {
-    const { getByText } = render(<CardForm />);
+    const { getByText } = renderWithProvider(<CardForm />);
 
     fireEvent.click(getByText("signInRecoveryPasswordButton"));
 
@@ -49,7 +50,7 @@ describe("CardForm", () => {
   });
 
   it("navigates to create new account page", () => {
-    const { getByText } = render(<CardForm />);
+    const { getByText } = renderWithProvider(<CardForm />);
 
     fireEvent.click(getByText("signInCreateNewAccount"));
 
@@ -57,7 +58,9 @@ describe("CardForm", () => {
   });
 
   it("renders the form inputs", () => {
-    const { getByText, getByPlaceholderText } = render(<CardForm />);
+    const { getByText, getByPlaceholderText } = renderWithProvider(
+      <CardForm />
+    );
 
     expect(getByText("signInInputCpf")).toBeInTheDocument();
     expect(
@@ -69,31 +72,69 @@ describe("CardForm", () => {
     ).toBeInTheDocument();
   });
 
-  // it("handles form submission", () => {
-  //   const mockHandleSubmitSuccess = { cpf: "123456", password: "pass" };
+  describe("handles form submission", () => {
+    it("success with valid credentials", async () => {
+      const mockHandleSubmitSuccess = { cpf: "96328770472", password: "pass" };
 
-  //   const { getByText, getByPlaceholderText } = render(<CardForm />);
+      const { getByText, getByPlaceholderText } = renderWithProvider(
+        <CardForm />
+      );
 
-  //   fireEvent.change(getByPlaceholderText("signInPlaceholderInputCpf"), {
-  //     target: { value: mockHandleSubmitSuccess.cpf },
-  //   });
-  //   fireEvent.change(getByPlaceholderText("signInPlaceholderInputPassword"), {
-  //     target: { value: mockHandleSubmitSuccess.password },
-  //   });
+      fireEvent.change(getByPlaceholderText("signInPlaceholderInputCpf"), {
+        target: { value: mockHandleSubmitSuccess.cpf },
+      });
 
-  //   fireEvent.click(getByText("signInButton"));
+      fireEvent.change(getByPlaceholderText("signInPlaceholderInputPassword"), {
+        target: { value: mockHandleSubmitSuccess.password },
+      });
 
-  //   expect(mockNavigate).toHaveBeenCalledWith("/home", { replace: true });
-  // });
+      fireEvent.click(getByText("signInButton"));
 
-  it("handles errors submission", () => {
-    const { getByText } = render(<CardForm />);
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith("/home", { replace: true });
+      });
+    });
+
+    it("handles errors submission", () => {
+      const { getByText } = renderWithProvider(<CardForm />);
+
+      fireEvent.click(getByText("signInButton"));
+
+      expect(getByText(mockHandleSubmitError.cpf.message)).toBeInTheDocument();
+      expect(
+        getByText(mockHandleSubmitError.password.message)
+      ).toBeInTheDocument();
+    });
+  });
+
+  it("displays error messages for invalid inputs", async () => {
+    const { getByText, getByPlaceholderText } = renderWithProvider(
+      <CardForm />
+    );
+
+    fireEvent.change(getByPlaceholderText("signInPlaceholderInputCpf"), {
+      target: { value: "invalid_cpf" },
+    });
+
+    fireEvent.change(getByPlaceholderText("signInPlaceholderInputPassword"), {
+      target: { value: "" }, // Empty password
+    });
 
     fireEvent.click(getByText("signInButton"));
 
-    expect(getByText(mockHandleSubmitError.cpf.message)).toBeInTheDocument();
-    expect(
-      getByText(mockHandleSubmitError.password.message)
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(getByText("O cpf é obrigatório")).toBeInTheDocument();
+      expect(getByText("A senha é obrigatória")).toBeInTheDocument();
+    });
+  });
+
+  it("does not navigate if form submission fails", async () => {
+    const { getByText } = renderWithProvider(<CardForm />);
+
+    fireEvent.click(getByText("signInButton"));
+
+    await waitFor(() => {
+      expect(mockNavigate).not.toHaveBeenCalledWith("/home", { replace: true });
+    });
   });
 });

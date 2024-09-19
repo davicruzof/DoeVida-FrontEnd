@@ -5,7 +5,6 @@ import {
   GridToolbarQuickFilter,
   ptBR,
 } from "@mui/x-data-grid";
-import Empty from "../../components/Empty";
 
 export type TableProps = {
   pageSize: number;
@@ -13,6 +12,8 @@ export type TableProps = {
   rows: any;
   setPageSize: (value: number) => void;
   loading: boolean;
+  tableAddText: string;
+  tableAddAction: () => void;
 };
 
 const Table = ({
@@ -21,13 +22,12 @@ const Table = ({
   rows,
   setPageSize,
   loading,
+  tableAddText,
+  tableAddAction,
 }: TableProps) => {
   const height = window.innerHeight - 100;
 
   if (loading) return <CircularProgress />;
-
-  if (rows.length === 0)
-    return <Empty text="Nenhuma informação foi encontrada!" />;
 
   function CustomToolbar() {
     return (
@@ -40,13 +40,12 @@ const Table = ({
           aria-controls={"fade-menu"}
           aria-haspopup="true"
           aria-expanded="true"
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
-          onClick={() => {}}
+          onClick={tableAddAction}
           color="primary"
           variant="contained"
           style={{ fontWeight: "600", color: "#fff", height: 42 }}
         >
-          Novo Agendamento
+          {`Adicionar ${tableAddText}`}
         </Button>
       </GridToolbarContainer>
     );
@@ -61,7 +60,6 @@ const Table = ({
       <DataGrid
         columns={fields}
         rows={rows}
-        // slots={{ toolbar: GridToolbar }}
         slots={{
           toolbar: CustomToolbar,
         }}

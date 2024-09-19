@@ -14,8 +14,6 @@ const Navigation = () => {
     }
   }, []);
 
-  console.log(authValues.signed);
-
   return authValues.signed ? <AuthRoutes /> : <NoAuthRoutes />;
 };
 

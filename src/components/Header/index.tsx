@@ -1,16 +1,20 @@
 import Logo from "@/assets/logo.svg";
 import * as S from "./styles";
 import { useTranslation } from "react-i18next";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Menu, MenuItem } from "@material-ui/core";
 import { ArrowDropDown } from "@material-ui/icons";
 import { AttendantItems } from "./constants";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth";
 
 export function Header() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const [items, setItems] = useState(AttendantItems);
   const { authValues } = useContext(AuthContext);
+  const user = window.sessionStorage.getItem("authStorage");
+  const path = location.pathname;
 
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -24,20 +28,51 @@ export function Header() {
     setAnchorEl(null);
   };
 
+  const handleSignUp = () => {
+    navigate("/", { replace: true });
+    window.sessionStorage.removeItem("authStorage");
+    window.location.reload();
+  };
+
+  useEffect(() => {
+    if (authValues?.signed) {
+      const isAdmin = authValues.user_type === "admin";
+
+      console.log("isAdmin", isAdmin);
+      console.log("authValues", authValues);
+
+      if (authValues.user_type === "admin") {
+        setItems([
+          { key: "menuAttendantEnterprises", path: "enterprises" },
+          { key: "menuAttendantDonors", path: "doadores" },
+        ]);
+      }
+
+      if (authValues.user_type === "user") {
+        setItems([
+          { key: "menuAttendantSchedules", path: "agendamentos doador" },
+          { key: "menuAttendantRequests", path: "solicitações" },
+        ]);
+      }
+    }
+  }, [authValues]);
+
   return (
     <S.Container>
       <S.WrapperLogo>
         <S.Logo src={Logo} alt="" />
         <S.Title>{t("appName")}</S.Title>
       </S.WrapperLogo>
-      {authValues.signed && (
+      {authValues?.signed && (
         <>
           <S.MenuDesktop>
-            {AttendantItems.map((item) => {
+            {items.map((item) => {
+              const isActive = decodeURIComponent(path) === `/${item.path}`;
               return (
                 <S.MenuItem
                   key={item.key}
-                  active={location.pathname.replace("/", "") === item.path}
+                  active={isActive ? "true" : undefined}
+                  onClick={() => navigate(item.path, { replace: true })}
                 >
                   {t(item.key)}
                 </S.MenuItem>
@@ -56,7 +91,7 @@ export function Header() {
               endIcon={<ArrowDropDown />}
               style={{ fontWeight: "600", color: "#2763f5" }}
             >
-              Daniel Lima
+              {JSON.parse(user!).user.name}
             </Button>
 
             <Menu
@@ -69,7 +104,7 @@ export function Header() {
               }}
             >
               <MenuItem onClick={handleClose}>Perfil</MenuItem>
-              <MenuItem onClick={handleClose}>Sair</MenuItem>
+              <MenuItem onClick={handleSignUp}>Sair</MenuItem>
             </Menu>
           </div>
         </>

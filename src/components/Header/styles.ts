@@ -37,12 +37,12 @@ export const MenuDesktop = styled.div`
   align-items: center;
 `;
 
-export const MenuItem = styled.a<{ active: boolean }>`
+export const MenuItem = styled.a<{ active?: string }>`
   font-size: 16px;
   line-height: 24px;
   letter-spacing: 0.01em;
   text-decoration: none;
-  color: ${(props) => (props.active ? "#2763f5" : "#59626d")};
+  color: ${(props) => (props?.active ? "#2763f5" : "#59626d")};
   font-weight: ${(props) => (props.active ? "600" : "400")};
   cursor: pointer;
 

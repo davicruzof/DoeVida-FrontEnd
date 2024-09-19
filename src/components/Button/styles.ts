@@ -11,6 +11,7 @@ export const Container = styled.button`
   justify-content: center;
   align-items: center;
   height: 48px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   border: none;
