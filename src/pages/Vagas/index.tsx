@@ -91,18 +91,19 @@ function Vagas() {
     if (items) {
       const vagasParsed = JSON.parse(items);
 
-      const vagasFormatted = vagasParsed.map((item: IItemData) => {
-        if (authValues.enterprise?.name !== item.enterpriseName) {
-          return;
-        }
-
-        return {
-          id: item.id,
-          day: item.dia,
-          range_hour: item.horario.map((item) => item).join(" - "),
-          vagas_quantity: item.quantidade.toString(),
-        };
-      });
+      const vagasFormatted = vagasParsed
+        .filter(
+          (item: IItemData) =>
+            authValues.enterprise?.name === item.enterpriseName
+        )
+        .map((item: IItemData) => {
+          return {
+            id: item.id,
+            day: item.dia,
+            range_hour: item.horario.map((item) => item).join(" - "),
+            vagas_quantity: item.quantidade.toString(),
+          };
+        });
 
       setRows(vagasFormatted);
     }

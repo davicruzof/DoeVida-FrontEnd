@@ -36,4 +36,13 @@ export const users: IUserAuth[] = [
       name: "Organizacao teste",
     },
   },
+  {
+    name: "Servidor",
+    cpf: "12345678903",
+    password: "servidor",
+    user_type: "servidor",
+    enterprise: {
+      name: "Organizacao teste 3",
+    },
+  },
 ];

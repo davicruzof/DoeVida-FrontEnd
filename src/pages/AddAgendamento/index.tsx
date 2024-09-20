@@ -69,6 +69,8 @@ function AddAgendamento({
 
   const handleChangeLocal = (event: SelectChangeEvent) => {
     setLocal(event.target.value);
+    setDia("selecione o dia");
+    setHorario("selecione o horário");
 
     const vagas = window.localStorage.getItem("vagas");
 
@@ -96,6 +98,7 @@ function AddAgendamento({
 
   const handleChangeDia = (event: SelectChangeEvent) => {
     setDia(event.target.value);
+    setHorario("selecione o horário");
 
     const vagas = window.localStorage.getItem("vagas");
 
