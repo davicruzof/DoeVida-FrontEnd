@@ -1,43 +1,24 @@
 import { Visibility } from "@material-ui/icons";
 import { IconButton } from "@mui/material";
 import Table from "../../components/Table";
-import { useState } from "react";
-import { Faker, pt_BR } from "@faker-js/faker";
-import { DateTime } from "luxon";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../context/auth";
+import { users } from "../SignIn/components/CardForm/dataBase";
 
 function Home() {
-  const faker = new Faker({
-    locale: [pt_BR],
-  });
+  const { authValues } = useContext(AuthContext);
 
+  const [rows, setRows] = useState<any[]>([]);
   const [pageSize, setPageSize] = useState<number>(10);
 
   function handleEditClick(id: any): void {
     console.log("Function not implemented.");
   }
 
-  function createRandomScheduler() {
-    const result = [];
-
-    for (let index = 0; index < 100; index++) {
-      result[index] = {
-        id: faker.datatype.uuid(),
-        nome: faker.person.fullName(),
-        dataSchedule: DateTime.fromISO(
-          faker.date.recent({ days: 2 }).toISOString()
-        ).toFormat("dd/MM/yyyy"),
-        hourSchedule: DateTime.fromISO(
-          faker.datatype.datetime().toISOString()
-        ).toFormat("HH:mm"),
-      };
-    }
-    return result;
-  }
-
   const VISIBLE_FIELDS = [
-    { field: "nome", headerName: "Nome", width: 350 },
-    { field: "dataSchedule", headerName: "Data do Agendamento", width: 250 },
-    { field: "hourSchedule", headerName: "Horário do Agendamento", width: 200 },
+    { field: "name", headerName: "Nome", width: 350 },
+    { field: "dataSchedule", headerName: "Data do Agendamento", width: 350 },
+    { field: "hourSchedule", headerName: "Horário do Agendamento", width: 350 },
     {
       field: "actions",
       type: "actions",
@@ -60,7 +41,32 @@ function Home() {
     },
   ];
 
-  const rows = createRandomScheduler();
+  useEffect(() => {
+    const schedules = window.localStorage.getItem("schedules");
+
+    if (schedules) {
+      const parsedSchedules = JSON.parse(schedules);
+
+      const schedulesByUser = parsedSchedules
+        .filter(
+          (schedule: any) =>
+            schedule.enterpriseName === authValues.enterprise!.name
+        )
+        .map((schedule: any) => {
+          const user = users.find((user) => user.cpf === schedule.user_id);
+
+          return {
+            id: schedule.id,
+            name: user?.name,
+            local: schedule.enterpriseName,
+            dataSchedule: schedule.date,
+            hourSchedule: schedule.hour,
+          };
+        });
+
+      setRows(schedulesByUser);
+    }
+  }, []);
 
   return (
     <div>
@@ -70,7 +76,7 @@ function Home() {
         rows={rows}
         pageSize={pageSize}
         setPageSize={setPageSize}
-        tableAddText="novo doador"
+        tableAddText="novo agendamento"
         tableAddAction={function (): void {
           throw new Error("Function not implemented.");
         }}

@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ButtonLink } from "../../../../components/ButtonLink";
 import { Button } from "../../../../components/Button";
 import { Input } from "../../../../components/Input";
-import { AuthContext } from "../../../../context/auth";
+import { AuthContext, IAuth } from "../../../../context/auth";
 import { IUserAuth, users } from "./dataBase";
 
 const CardForm: React.FC = () => {
@@ -41,13 +41,14 @@ const CardForm: React.FC = () => {
       return alert("Cpf ou senha inválidos");
     }
 
-    const authData = {
+    const authData: IAuth = {
       signed: true,
       user_type: user.user_type,
       user: {
         name: user.name,
         cpf: user.cpf,
       },
+      enterprise: user.enterprise,
     };
 
     setAuthValues(authData);

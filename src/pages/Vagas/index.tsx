@@ -1,17 +1,18 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable react/jsx-key */
-import { Delete, Edit, Visibility } from "@material-ui/icons";
+import { Delete } from "@material-ui/icons";
 import { IconButton } from "@mui/material";
 import Table from "../../components/Table";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/auth";
 
 interface IItemData {
+  enterpriseName: string;
   id: string;
-  day: string;
-  range_hour: string;
-  vagas_quantity: string;
-  organizacao: string;
+  dia: string;
+  horario: string[];
+  quantidade: number;
 }
 
 interface IItemDataFormatted {
@@ -23,21 +24,10 @@ interface IItemDataFormatted {
 
 function Vagas() {
   const navigate = useNavigate();
+  const { authValues } = useContext(AuthContext);
   const [rows, setRows] = useState<IItemDataFormatted[]>([]);
 
   const [pageSize, setPageSize] = useState<number>(10);
-
-  const itemsAction = (data: IItemData[]) => {
-    const rowsFormatted = data.map((item) => {
-      return {
-        id: item.id,
-        day: item.day,
-        range_hour: item.range_hour,
-        vagas_quantity: item.vagas_quantity,
-      };
-    });
-    setRows(rowsFormatted);
-  };
 
   const deleteAction = (id: string) => {
     const result = window.confirm("Deseja realmente excluir?");
@@ -46,45 +36,32 @@ function Vagas() {
       return;
     }
 
-    const enterprises = window.localStorage.getItem("vagas");
+    const vagas = window.localStorage.getItem("vagas");
 
-    if (enterprises) {
-      const parsedEnterprises = JSON.parse(enterprises);
-      const filteredEnterprises: IItemData[] = parsedEnterprises.filter(
-        (item: IItemData) => item.id !== id
+    if (vagas) {
+      const parsedVagas = JSON.parse(vagas);
+      const filteredVagas: IItemData[] = parsedVagas.filter(
+        (item: IItemData) =>
+          item.id !== id && item.enterpriseName === authValues.enterprise?.name
       );
-      window.localStorage.setItem(
-        "enterprises",
-        JSON.stringify(filteredEnterprises)
-      );
-      itemsAction(filteredEnterprises);
+
+      window.localStorage.setItem("vagas", JSON.stringify(filteredVagas));
+
+      const vagasFormatted = filteredVagas.map((item: IItemData) => {
+        return {
+          id: item.id,
+          day: item.dia,
+          range_hour: item.horario.map((item) => item).join(" - "),
+          vagas_quantity: item.quantidade.toString(),
+        };
+      });
+
+      setRows(vagasFormatted);
     }
   };
 
-  const editAction = (id: string) => {
-    const enterprises = window.localStorage.getItem("vagas");
-    const enterprisesParsed = JSON.parse(enterprises!);
-
-    const enterprise = enterprisesParsed.find(
-      (item: IItemData) => item.id === id
-    );
-
-    navigate(`/editVaga`, { replace: true, state: enterprise });
-  };
-
-  const viewAction = (id: string) => {
-    const enterprises = window.localStorage.getItem("vagas");
-    const enterprisesParsed = JSON.parse(enterprises!);
-
-    const enterprise = enterprisesParsed.find(
-      (item: IItemData) => item.id === id
-    );
-
-    navigate(`/viewVagas`, { replace: true, state: enterprise });
-  };
-
   const VISIBLE_FIELDS = [
-    { field: "day", headerName: "Dia da semana", width: 400 },
+    { field: "day", headerName: "Dia da semana", width: 300 },
     { field: "range_hour", headerName: "Horário", width: 350 },
     { field: "vagas_quantity", headerName: "Quantidade de vagas", width: 350 },
     {
@@ -95,22 +72,6 @@ function Vagas() {
       cellClassName: "actions",
       getActions: (item: IItemData) => {
         return [
-          <IconButton
-            color="primary"
-            aria-label="view enterprise"
-            component="label"
-            onClick={() => viewAction(item.id)}
-          >
-            <Visibility />
-          </IconButton>,
-          <IconButton
-            color="primary"
-            aria-label="edit enterprise"
-            component="label"
-            onClick={() => editAction(item.id)}
-          >
-            <Edit />
-          </IconButton>,
           <IconButton
             color="primary"
             aria-label="delete enterprise"
@@ -129,7 +90,21 @@ function Vagas() {
 
     if (items) {
       const vagasParsed = JSON.parse(items);
-      itemsAction(vagasParsed);
+
+      const vagasFormatted = vagasParsed.map((item: IItemData) => {
+        if (authValues.enterprise?.name !== item.enterpriseName) {
+          return;
+        }
+
+        return {
+          id: item.id,
+          day: item.dia,
+          range_hour: item.horario.map((item) => item).join(" - "),
+          vagas_quantity: item.quantidade.toString(),
+        };
+      });
+
+      setRows(vagasFormatted);
     }
   }, []);
 

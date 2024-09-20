@@ -87,3 +87,10 @@ export const Select = styled.select`
   font-weight: 400;
   cursor: pointer;
 `;
+
+export const Label = styled.label`
+  color: ${colors.text.darkBlue};
+  margin-bottom: 4px;
+  font-weight: 500;
+  font-size: 14px;
+`;

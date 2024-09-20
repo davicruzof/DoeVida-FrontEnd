@@ -38,13 +38,19 @@ export function Header() {
     if (authValues?.signed) {
       const isAdmin = authValues.user_type === "admin";
 
-      console.log("isAdmin", isAdmin);
-      console.log("authValues", authValues);
-
       if (authValues.user_type === "admin") {
         setItems([
           { key: "menuAttendantEnterprises", path: "enterprises" },
           { key: "menuAttendantDonors", path: "doadores" },
+        ]);
+      }
+
+      if (authValues.user_type === "servidor") {
+        setItems([
+          { key: "menuAttendantSchedules", path: "agendamentos" },
+          { key: "menuAttendantRequests", path: "solicitacoes" },
+          { key: "menuAttendantSupport", path: "apoio" },
+          { key: "menuAttendantVacancies", path: "vagas" },
         ]);
       }
 

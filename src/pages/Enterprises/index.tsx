@@ -86,8 +86,6 @@ function Enterprises() {
       (item: IEnterpriseData) => item.id === id
     );
 
-    console.log("enterprise", enterprise);
-
     navigate(`/viewEnterprises`, { replace: true, state: enterprise });
   };
 

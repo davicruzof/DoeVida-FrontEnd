@@ -37,9 +37,9 @@ interface IScheduleData {
 
 interface IVagas {
   id: number;
-  enterpriseId: string;
+  enterpriseName: string;
   dia: string;
-  horarios: string[];
+  horario: string[];
   quantidade: number;
 }
 
@@ -55,9 +55,11 @@ function AddAgendamento({
   const { authValues } = useContext(AuthContext);
   const [enterPrises, setEnterprises] = useState<IEnterpriseData[]>([]);
 
-  const [vagasByEnterprise, setVagasByEnterprise] = useState<IVagas[]>([]);
+  const [vagasDayByEnterprise, setVagasDayByEnterprise] = useState<string[]>(
+    []
+  );
 
-  const [horariosByDay, setHorariosByDay] = useState<string[]>([]);
+  const [horariosByDay, setHorariosByDay] = useState<IVagas[]>([]);
 
   const [local, setLocal] = useState("selecione o local");
 
@@ -68,29 +70,47 @@ function AddAgendamento({
   const handleChangeLocal = (event: SelectChangeEvent) => {
     setLocal(event.target.value);
 
-    const enterprise = enterPrises.find(
-      (enterprise) => enterprise.enterpriseName === event.target.value
-    );
-
     const vagas = window.localStorage.getItem("vagas");
 
     const vagasParsed = JSON.parse(vagas!) as IVagas[];
 
-    const vagasEnterprise = vagasParsed.filter(
-      (vaga) => vaga.enterpriseId === enterprise?.id
+    // get dias by enterprise and not repeat days
+    const daysByEnterprise = vagasParsed
+      .filter((vaga) => vaga.enterpriseName === event.target.value)
+      .map((vaga) => vaga.dia);
+
+    // Remover duplicatas usando Set e converter string no formato de data dd/mm/yyyy
+    const uniqueDaysByEnterprise = Array.from(new Set(daysByEnterprise)).map(
+      (day) => {
+        const [year, monthNumber, dayNumber] = day.split("-");
+
+        return `${dayNumber.padStart(2, "0")}/${monthNumber.padStart(
+          2,
+          "0"
+        )}/${year}`;
+      }
     );
 
-    setVagasByEnterprise(vagasEnterprise);
+    setVagasDayByEnterprise(uniqueDaysByEnterprise);
   };
 
   const handleChangeDia = (event: SelectChangeEvent) => {
     setDia(event.target.value);
 
-    const vagasByDay = vagasByEnterprise.find(
-      (vaga) => vaga.dia === event.target.value
+    const vagas = window.localStorage.getItem("vagas");
+
+    const vagasParsed = JSON.parse(vagas!) as IVagas[];
+
+    const date = event.target.value.split("/").reverse().join("-");
+
+    const vagasByDay = vagasParsed.filter(
+      (vaga) =>
+        vaga.dia === date &&
+        vaga.enterpriseName === local &&
+        vaga.quantidade > 0
     );
 
-    setHorariosByDay(vagasByDay!.horarios);
+    setHorariosByDay(vagasByDay);
   };
 
   const handleChangeHorario = (event: SelectChangeEvent) => {
@@ -144,8 +164,12 @@ function AddAgendamento({
     if (schedules) {
       const parsedSchedules = JSON.parse(schedules);
 
-      if (parsedSchedules.some((item: IScheduleData) => item.id === id)) {
-        openSnack("Horário já cadastrado");
+      if (
+        parsedSchedules.filter(
+          (item: IScheduleData) => item.user_id === authValues.user.cpf
+        ).length > 3
+      ) {
+        openSnack("Você já possui 3 agendamentos cadastrados");
         return;
       }
 
@@ -156,12 +180,19 @@ function AddAgendamento({
       window.localStorage.setItem("schedules", JSON.stringify([scheduleData]));
     }
 
-    subtractVaga(vagasByEnterprise.find((vaga) => vaga.dia === dia)!);
+    subtractVaga(
+      horariosByDay.find(
+        (vaga) =>
+          vaga.dia === dia.split("/").reverse().join("-") &&
+          vaga.enterpriseName === local &&
+          vaga.horario.join("-") === horario
+      )!
+    );
 
     setLocal("selecione o local");
     setDia("selecione o dia");
     setHorario("selecione o horário");
-    setVagasByEnterprise([]);
+    setVagasDayByEnterprise([]);
     setHorariosByDay([]);
 
     closeModal();
@@ -241,7 +272,7 @@ function AddAgendamento({
                   flexDirection: "column",
                   display: "flex",
                 }}
-                disabled={vagasByEnterprise.length === 0}
+                disabled={vagasDayByEnterprise.length === 0}
                 placeholder="selecione o dia"
                 label="selecione o dia"
                 onChange={handleChangeDia}
@@ -249,9 +280,9 @@ function AddAgendamento({
                 <MenuItem value="selecione o dia" selected disabled>
                   selecione o dia
                 </MenuItem>
-                {vagasByEnterprise.map((vaga) => (
-                  <MenuItem key={vaga.id} value={vaga.dia}>
-                    {vaga.dia}
+                {vagasDayByEnterprise.map((vaga) => (
+                  <MenuItem key={vaga} value={vaga}>
+                    {vaga}
                   </MenuItem>
                 ))}
               </Select>
@@ -281,8 +312,8 @@ function AddAgendamento({
                   selecione o horário
                 </MenuItem>
                 {horariosByDay.map((horario) => (
-                  <MenuItem key={horario} value={horario}>
-                    {horario}
+                  <MenuItem key={horario.id} value={horario.horario.join("-")}>
+                    {horario.horario.join("-")}
                   </MenuItem>
                 ))}
               </Select>
